@@ -10,15 +10,21 @@ export class PinComponent implements OnInit {
 
   pins: number[];
 
-  constructor(private scoreBoardService: ScoreboardService) {
+  constructor(
+    private scoreBoardService: ScoreboardService
+  ) {
     this.pins = this.scoreBoardService.getPins();
   }
 
   ngOnInit(): void {
   }
 
+  /**
+   * This method is use to send pin to calculate score 
+   * @param pin 
+   */
   hitPins(pin: number): void {
-    console.log(pin);
+    this.scoreBoardService.pinHit.next(pin);
   }
 
 }

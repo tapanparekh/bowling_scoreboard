@@ -1,1 +1,36 @@
-<p>game works!</p>
+<div>
+    <table class="scoreboard">
+        <caption>Player: Tapan Parekh</caption>
+        <thead>
+            <tr>
+                <th *ngFor="let frame of frames" class="frame-number">{{frame.id}}</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td *ngFor="let frame of frames" [ngClass]="{'active':frame.isActive}">
+                    <div class="rolls">
+                        <div class="roll">
+                            <span *ngIf="frame.firstRoll.score===10">X</span>
+                            <span
+                                *ngIf="frame.firstRoll.score<10&&frame.firstRoll.score>0">{{frame.firstRoll.score}}</span>
+                            <span *ngIf="frame.firstRoll.score===0"></span>
+                        </div>
+                        <div class="roll">
+                            <span
+                                *ngIf="frame.secondRoll.score<10&&frame.secondRoll.score>0">{{frame.secondRoll.score}}</span>
+                            <span *ngIf="frame.secondRoll.score===0"></span>
+                        </div>
+                    </div>
+                    <div class="frame-score">
+                        <span *ngIf="frame.score>0">{{frame.score}}</span>
+                    </div>
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

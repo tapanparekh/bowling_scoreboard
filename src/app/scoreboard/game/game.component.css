@@ -1,0 +1,35 @@
+.scoreboard {
+    width: 100%;
+    padding: 8px;
+}
+
+.scoreboard th {
+    text-align: center;
+    background-color: #1fb6ff;
+    color: white;
+}
+
+.rolls {
+    display: flex;
+}
+
+.roll {
+    width: 100%;
+    text-align: center;
+    height: 20px;
+    border-style: solid;
+    border-color: #1fb6ff;
+    border-width: 1px;
+}
+
+.frame-number {
+    width: 10%;
+}
+
+.frame-score {
+    text-align: center;
+}
+
+.active {
+    background: #e0ecf1;
+}
