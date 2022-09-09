@@ -8,25 +8,35 @@ import { ScoreboardService } from '../scoreboard.service';
   styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+
   frames: Frame[] = [];
+  totalScore: number = 0;
+
   constructor(
     private scoreBoardService: ScoreboardService
   ) {
     this.scoreBoardService.pinHit.subscribe((pin: number) => {
-      this.calculateScore(pin)
+      this.pinHit(pin);
     });
     this.scoreBoardService.scoreUpdate.subscribe((score: Score) => {
+      this.totalScore = score.totalScore;
       this.frames = score.frames;
-      console.log(this.frames);
     });
-    this.frames = this.scoreBoardService.getframes().frames;
   }
 
   ngOnInit(): void {
   }
 
-  private calculateScore(pin: number): void {
-    this.scoreBoardService.calculateScore(pin);
+  resetGame() {
+    this.scoreBoardService.resetGame();
+  }
+
+  /**
+   * This method will add details of roll
+   * @param pin Number of pin hit by player
+   */
+  private pinHit(pin: number): void {
+    this.scoreBoardService.addroll(pin);
   }
 
 }

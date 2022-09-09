@@ -3,10 +3,28 @@
     padding: 8px;
 }
 
+.game-board {
+    min-width: 650px;
+}
+
+.scoreboard {
+    border-collapse: collapse;
+}
+
 .scoreboard th {
     text-align: center;
     background-color: #1fb6ff;
     color: white;
+}
+
+.table-data {
+    border: 1px solid #1fb6ff;
+    height: 25px;
+    width: 60px;
+}
+
+.score {
+    min-width: 60px;
 }
 
 .rolls {
@@ -17,13 +35,6 @@
     width: 100%;
     text-align: center;
     height: 20px;
-    border-style: solid;
-    border-color: #1fb6ff;
-    border-width: 1px;
-}
-
-.frame-number {
-    width: 10%;
 }
 
 .frame-score {
@@ -32,4 +43,22 @@
 
 .active {
     background: #e0ecf1;
+}
+
+.total-score {
+    text-align: center;
+    border: solid;
+    border-width: 1px;
+    border: 1px solid #1fb6ff;
+}
+
+#reset-game-btn {
+    background: #1fb6ff;;
+    border: none;
+    color: #ffffff;
+    height: 30px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
 }
