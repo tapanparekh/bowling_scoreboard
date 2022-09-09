@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Frame, Score } from './scoreboard.model';
 
@@ -11,8 +12,9 @@ export class ScoreboardService {
   remainingPin = new Subject<number[]>;
   pins: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  constructor() {
-
+  constructor(
+    private toastr: ToastrService
+  ) {
   }
 
   /**
@@ -56,10 +58,12 @@ export class ScoreboardService {
       if (activeFrame.rolls.length === 1) {
         if (pins === 10) {
           activeFrame.rolls.push('X');
+          this.notification('Strike!');
         }
         else {
           if (activeFrame.rolls[0] + pins === 10) {
             activeFrame.rolls.push('/');
+            this.notification('Spare!');
           }
           else {
             activeFrame.rolls.push(pins);
@@ -70,6 +74,7 @@ export class ScoreboardService {
       if (activeFrame.rolls.length === 0) {
         if (pins === 10) {
           activeFrame.rolls.push('X');
+          this.notification('Strike!');
         }
         else {
           activeFrame.rolls.push(pins);
@@ -82,6 +87,7 @@ export class ScoreboardService {
       if (activeFrame.rolls.length === 1) {
         if (activeFrame.rolls[0] + pins === 10) {
           activeFrame.rolls.push('/');
+          this.notification('Spare!');
         }
         else {
           activeFrame.rolls.push(pins);
@@ -93,6 +99,7 @@ export class ScoreboardService {
       if (activeFrame.rolls.length === 0) {
         if (pins === 10) {
           activeFrame.rolls.push('X');
+          this.notification('Strike!');
           activeFrame.isActive = false;
           nextFrame.isActive = true;
         }
@@ -202,5 +209,16 @@ export class ScoreboardService {
    */
   private restorePin(): void {
     this.remainingPin.next(this.pins);
+  }
+
+  /**
+   * This method will display notification
+   * @param message Message string
+   */
+  notification(message: string) {
+    this.toastr.success(message, '', {
+      timeOut: 2000,
+      positionClass: 'toast-bottom-center'
+    })
   }
 }

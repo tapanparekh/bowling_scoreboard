@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Frame, Score } from '../scoreboard.model';
 import { ScoreboardService } from '../scoreboard.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-game',
@@ -13,7 +14,7 @@ export class GameComponent implements OnInit {
   totalScore: number = 0;
 
   constructor(
-    private scoreBoardService: ScoreboardService
+    private scoreBoardService: ScoreboardService,
   ) {
     this.scoreBoardService.pinHit.subscribe((pin: number) => {
       this.pinHit(pin);
