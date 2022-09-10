@@ -1,11 +1,12 @@
 .pins {
     padding: 10px;
+    text-align: center;
 }
 
 .pin {
     width: 30px;
     margin: 10px;
-    background-color: #1fb6ff;
+    background-color: #506cf0;
     color: white;
     border: none;
     height: 30px;

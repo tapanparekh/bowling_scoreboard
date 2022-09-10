@@ -13,12 +13,12 @@
 
 .scoreboard th {
     text-align: center;
-    background-color: #1fb6ff;
+    background-color: #506cf0;
     color: white;
 }
 
 .table-data {
-    border: 1px solid #1fb6ff;
+    border: 1px solid #506cf0;
     height: 25px;
     width: 60px;
 }
@@ -49,11 +49,19 @@
     text-align: center;
     border: solid;
     border-width: 1px;
-    border: 1px solid #1fb6ff;
+    border: 1px solid #506cf0;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.roll-devider {
+    border-right-style: solid;
+    border-width: 2px;
+    border-color: #506cf0;
 }
 
 #reset-game-btn {
-    background: #1fb6ff;;
+    background: #506cf0;
     border: none;
     color: #ffffff;
     height: 30px;

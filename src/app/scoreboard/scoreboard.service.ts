@@ -52,7 +52,13 @@ export class ScoreboardService {
     if (activeFrame.id == 10) {
       if (activeFrame.rolls.length === 2) {
         if (activeFrame.rolls[0] === 'X' || activeFrame.rolls[1] === '/') {
-          activeFrame.rolls.push(pins);
+          if (pins === 10) {
+            activeFrame.rolls.push('X');
+            this.notification('Strike!');
+          }
+          else {
+            activeFrame.rolls.push(pins);
+          }
         }
       }
       if (activeFrame.rolls.length === 1) {
@@ -110,7 +116,6 @@ export class ScoreboardService {
       }
     }
     let score = this.scoreCalculate(this.score.frames);
-    activeFrame.score = score;
     this.score.totalScore = score;
     this.scoreUpdate.next(this.score);
   }
@@ -136,17 +141,30 @@ export class ScoreboardService {
     let frameLength: number = frames.length;
     for (let i = 0; i < frameLength; i++) {
       let currentFrame = frames[i];
-      if (currentFrame.rolls[0] === 'X' && i < 9) {
-        score += 10 + this.getNextFramesScore(frames, i, 2);
-      } else if (currentFrame.rolls.length === 2 && currentFrame.rolls[1] === '/' && i < 9) {
-        score += 10 + this.getNextFramesScore(frames, i, 1);
-      } else if (currentFrame.rolls.length === 3) {
-        score += this.getLastFrameScore(currentFrame);
-      } else {
-        score += this.getrollScore(currentFrame, 0) + this.getrollScore(currentFrame, 1);
+      if (currentFrame.rolls.length) {
+        if (currentFrame.rolls[0] === 'X' && i < 9) {
+          score += 10 + this.getNextFramesScore(frames, i, 2);
+        } else if (currentFrame.rolls.length === 2 && currentFrame.rolls[1] === '/' && i < 9) {
+          score += 10 + this.getNextFramesScore(frames, i, 1);
+        } else if (currentFrame.rolls.length === 3) {
+          score += this.getLastFrameScore(currentFrame);
+        } else {
+          score += this.getRollScore(currentFrame, 0) + this.getRollScore(currentFrame, 1);
+        }
+        this.setFrameScore(currentFrame.id, score);
       }
     }
     return score;
+  }
+
+  /**
+   * This method is used to set updated score of frame
+   * @param frameId Id of frame
+   * @param score Score
+   */
+  setFrameScore(frameId: number, score: number): void {
+    let frame = this.score.frames.filter(f => f.id === frameId)[0];
+    frame.score = score;
   }
 
   /**
@@ -158,10 +176,10 @@ export class ScoreboardService {
    * @returns 
    */
   private getNextFramesScore(frames: Frame[], index: number, count: number) {
-    let firstroll = this.getrollScore(frames[index + 1], 0);
-    let secondroll = this.getrollScore(frames[index + 1], 1);
+    let firstroll = this.getRollScore(frames[index + 1], 0);
+    let secondroll = this.getRollScore(frames[index + 1], 1);
     if (frames[index + 1].rolls.length === 1) {
-      return count === 1 ? firstroll : firstroll + this.getrollScore(frames[index + 2], 0);
+      return count === 1 ? firstroll : firstroll + this.getRollScore(frames[index + 2], 0);
     }
     return count === 1 ? firstroll : (secondroll === 10 && firstroll !== 10 ? secondroll : secondroll + firstroll);
   }
@@ -172,8 +190,8 @@ export class ScoreboardService {
    * @param index Index of frame
    * @returns Score of roll
    */
-  private getrollScore(frame: Frame, index: number): number {
-    if (frame.rolls[index]) {
+  private getRollScore(frame: Frame, index: number): number {
+    if (frame && frame.rolls[index]) {
       if (frame.rolls[index] === 'X' || frame.rolls[index] === '/') {
         return 10;
       }
@@ -188,9 +206,9 @@ export class ScoreboardService {
    * @returns Score of 10'th frame
    */
   private getLastFrameScore(frame: Frame): number {
-    let third = this.getrollScore(frame, 2);
-    let second = this.getrollScore(frame, 1);
-    let first = this.getrollScore(frame, 0);
+    let third = this.getRollScore(frame, 2);
+    let second = this.getRollScore(frame, 1);
+    let first = this.getRollScore(frame, 0);
     return third === 10 && second !== 10 ? third + first : (second === 10 && first !== 10 ? third + second : first + second + third);
   }
 

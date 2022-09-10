@@ -1,6 +1,6 @@
 <div class="game-board">
     <table class="scoreboard">
-        <caption>Tapan Parekh</caption>
+        <caption>Player 1</caption>
         <thead>
             <tr>
                 <th *ngFor="let frame of frames" class="table-data">{{frame.id}}</th>
@@ -11,13 +11,13 @@
             <tr>
                 <td *ngFor="let frame of frames" [ngClass]="{'active':frame.isActive,'table-data':true}">
                     <div class="rolls">
-                        <div class="roll" *ngFor="let roll of frame.rolls">
+                        <div class="roll" *ngFor="let roll of frame.rolls; let last = last; let first = first;" [ngClass]="{'roll-devider': frame.rolls.length>1&&!last}">
                             <span>{{roll}}</span>
                         </div>
                     </div>
                 </td>
                 <td rowspan="2" class="total-score">
-                    {{totalScore}}
+                    <span>{{totalScore}}</span>
                 </td>
             </tr>
             <tr>
